@@ -1,0 +1,102 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: white;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.logo h1 {
+  font-size: 1.4rem;
+  color: var(--primary, #222);
+}
+
+.logoIcon {
+  width: 28px;
+  height: 28px;
+  fill: var(--primary, #222);
+}
+
+/* Search */
+.searchBar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 0.4rem 1rem;
+  flex: 1;
+  max-width: 400px;
+  margin: 0 1.5rem;
+  background: #f9f9f9;
+}
+
+.searchIcon {
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  flex: 1;
+  background: transparent;
+  font-size: 1rem;
+}
+
+/* Sesión */
+.userSession {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.userBtn {
+  background-color: var(--primary, #333);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btnLogin {
+  background-color: var(--primary, #007bff);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btnLogout {
+  background-color: transparent;
+  border: 1px solid #aaa;
+  border-radius: 20px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  color: #444;
+  font-weight: 500;
+}
+
+.btnLogin:hover {
+  background-color: #0056b3;
+}
+
+.userBtn:hover,
+.btnLogout:hover {
+  opacity: 0.8;
+}
