@@ -1,31 +1,73 @@
 
+// Página principal de la aplicación de reservas de alojamientos
 
-import React from "react";
-import styles from "./Home.module.css";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Categories from "./components/Categories";
-import Properties from "./components/Properties";
-import Experiences from "./components/Experiences";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import SearchFiltersComponent, { type SearchFilters } from '../components/SearchFilters';
+import AccommodationList from '../components/AccommodationList';
+import { mockAccommodations } from '../data/accommodations';
+import '../styles/Home.css';
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
+  const [filters, setFilters] = useState<SearchFilters>({
+    location: '',
+    checkIn: '',
+    checkOut: '',
+    guests: 1,
+    priceRange: [0, 300],
+    type: 'all'
+  });
+
+  const handleFiltersChange = (newFilters: SearchFilters) => {
+    setFilters(newFilters);
+  };
+
+  const handleAccommodationClick = (id: number) => {
+    navigate(`/accommodation/${id}`);
+  };
+
+  const handleBookNow = (id: number) => {
+    navigate(`/accommodation/${id}`);
+  };
+
   return (
-    <>
+    <div className="home-page">
       <header>
         <Navbar />
       </header>
 
-      <main className={styles.main}>
+      <main className="home-main">
+        {/* Hero Section */}
         <Hero />
-        <Categories />
-        <Properties />
-        <Experiences />
+
+        {/* Container principal */}
+        <div className="home-container">
+          {/* Filtros de búsqueda */}
+          <SearchFiltersComponent 
+            onFiltersChange={handleFiltersChange}
+            initialFilters={filters}
+          />
+
+          {/* Lista de alojamientos */}
+          <AccommodationList
+            accommodations={mockAccommodations}
+            filters={filters}
+            onAccommodationClick={handleAccommodationClick}
+            onBookNow={handleBookNow}
+            itemsPerPage={6}
+          />
+        </div>
       </main>
 
-      <footer className={styles.footer}>
-        <div className={styles.footerContainer}></div>
+      <footer className="home-footer">
+        <div className="footer-content">
+          <p>&copy; 2024 HomeSweetHome. Todos los derechos reservados.</p>
+        </div>
       </footer>
-    </>
+    </div>
   );
 };
 

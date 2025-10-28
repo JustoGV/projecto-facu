@@ -1,0 +1,68 @@
+/* Estilos para la página Home */
+
+.home-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.home-main {
+  flex: 1;
+  background-color: #ffffff;
+}
+
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+/* Footer simple */
+.home-footer {
+  background: #f8f9fa;
+  color: #666666;
+  border-top: 1px solid #e9ecef;
+  padding: 20px 0;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.footer-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .home-container {
+    padding: 0 16px;
+  }
+  
+  .home-footer {
+    padding: 16px 0;
+  }
+  
+  .footer-content {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: 0 12px;
+  }
+  
+  .footer-content p {
+    font-size: 0.8rem;
+  }
+}

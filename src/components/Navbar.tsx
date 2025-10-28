@@ -29,11 +29,11 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className={styles.navbar}>
+    <nav className="navbar">
       {/* Logo */}
-      <div className={styles.logo}>
+      <div className="logo">
         <svg
-          className={styles.logoIcon}
+          className="logoIcon"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="var(--primary)"
@@ -44,28 +44,28 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Barra de búsqueda */}
-      <div className={styles.searchBar}>
-        <span className={styles.searchIcon}>🔍</span>
+      <div className="searchBar">
+        <span className="searchIcon">🔍</span>
         <input
           type="text"
           placeholder="¿A dónde vas?"
-          className={styles.searchInput}
+          className="searchInput"
         />
       </div>
 
       {/* Sesión de usuario */}
-      <div className={styles.userSession}>
+      <div className="userSession">
         {username ? (
           <>
-            <button className={styles.userBtn} onClick={handleUserClick}>
+            <button className="userBtn" onClick={handleUserClick}>
               {username}
             </button>
-            <button className={styles.btnLogout} onClick={handleLogout}>
+            <button className="btnLogout" onClick={handleLogout}>
               Cerrar sesión
             </button>
           </>
         ) : (
-          <button className={styles.btnLogin} onClick={handleLogin}>
+          <button className="btnLogin" onClick={handleLogin}>
             Iniciar sesión
           </button>
         )}
