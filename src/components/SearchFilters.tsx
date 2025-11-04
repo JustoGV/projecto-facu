@@ -26,7 +26,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
     checkIn: initialFilters.checkIn || '',
     checkOut: initialFilters.checkOut || '',
     guests: initialFilters.guests || 1,
-    priceRange: initialFilters.priceRange || [0, 300],
+    priceRange: initialFilters.priceRange || [0, 150000],
     type: initialFilters.type || 'all'
   });
 
@@ -48,7 +48,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
       checkIn: '',
       checkOut: '',
       guests: 1,
-      priceRange: [0, 300],
+      priceRange: [0, 150000],
       type: 'all'
     };
     setFilters(defaultFilters);
@@ -147,7 +147,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
               <input
                 type="number"
                 min="0"
-                max="500"
+                max="200000"
                 value={filters.priceRange[0]}
                 onChange={(e) => handlePriceRangeChange(0, parseInt(e.target.value) || 0)}
                 className="price-input"
@@ -157,7 +157,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
               <input
                 type="number"
                 min="0"
-                max="500"
+                max="200000"
                 value={filters.priceRange[1]}
                 onChange={(e) => handlePriceRangeChange(1, parseInt(e.target.value) || 0)}
                 className="price-input"
@@ -165,7 +165,7 @@ const SearchFiltersComponent: React.FC<SearchFiltersProps> = ({
               />
             </div>
             <div className="price-range-display">
-              {filters.priceRange[0]}€ - {filters.priceRange[1]}€
+              ${filters.priceRange[0].toLocaleString()} - ${filters.priceRange[1].toLocaleString()}
             </div>
           </div>
         </div>

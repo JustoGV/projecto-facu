@@ -162,9 +162,9 @@ const BookingForm: React.FC<BookingFormProps> = ({
   const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
+    return new Intl.NumberFormat('es-AR', {
       style: 'currency',
-      currency: 'EUR'
+      currency: 'ARS'
     }).format(price);
   };
 

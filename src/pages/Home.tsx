@@ -17,7 +17,7 @@ const Home: React.FC = () => {
     checkIn: '',
     checkOut: '',
     guests: 1,
-    priceRange: [0, 300],
+    priceRange: [0, 150000],
     type: 'all'
   });
 

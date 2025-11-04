@@ -39,7 +39,7 @@ export const mockAccommodations: Accommodation[] = [
     amenities: ['WiFi', 'Cocina', 'Aire acondicionado', 'TV', 'Lavadora'],
     rating: 4.8,
     reviews: 127,
-    host: "María García",
+    host: "María González",
     available: true
   },
   {
@@ -61,7 +61,7 @@ export const mockAccommodations: Accommodation[] = [
     amenities: ['WiFi', 'Piscina', 'Jardín', 'Barbacoa', 'Parking', 'Vista al mar'],
     rating: 4.9,
     reviews: 89,
-    host: "Carlos Martínez",
+    host: "Carlos Fernández",
     available: true
   },
   {
@@ -83,7 +83,7 @@ export const mockAccommodations: Accommodation[] = [
     amenities: ['WiFi', 'Desayuno incluido', 'Recepción 24h', 'Spa', 'Gimnasio', 'Room service'],
     rating: 4.7,
     reviews: 203,
-    host: "Hotel Barcelona",
+    host: "Hotel Córdoba",
     available: true
   },
   {
@@ -105,7 +105,7 @@ export const mockAccommodations: Accommodation[] = [
     amenities: ['WiFi', 'Chimenea', 'Cocina', 'Senderismo', 'Parking', 'Vistas a la montaña'],
     rating: 4.6,
     reviews: 74,
-    host: "Ana López",
+    host: "Ana Rodriguez",
     available: true
   },
   {
@@ -127,15 +127,15 @@ export const mockAccommodations: Accommodation[] = [
     amenities: ['WiFi', 'Aire acondicionado', 'Cocina moderna', 'TV Smart', 'Escritorio'],
     rating: 4.5,
     reviews: 156,
-    host: "David Ruiz",
+    host: "David Morales",
     available: true
   },
   {
     id: 6,
-    title: "Villa con piscina en Sevilla",
-    description: "Espaciosa villa andaluza con piscina privada y patio tradicional. Perfecta para grupos grandes que buscan lujo y comodidad.",
-    price: 200,
-    location: "Sevilla, España",
+    title: "Villa con piscina en Mendoza",
+    description: "Espaciosa villa con piscina privada y jardín. Perfecta para grupos grandes que buscan lujo y comodidad entre viñedos.",
+    price: 105000,
+    location: "Mendoza, Argentina",
     image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=500&h=300&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&h=600&fit=crop",
@@ -149,7 +149,7 @@ export const mockAccommodations: Accommodation[] = [
     amenities: ['WiFi', 'Piscina privada', 'Patio', 'Aire acondicionado', 'Cocina completa', 'Parking'],
     rating: 4.9,
     reviews: 91,
-    host: "Carmen Jiménez",
+    host: "Carmen Vega",
     available: true
   }
 ];
