@@ -1,13 +1,14 @@
-// Página de detalle de alojamiento
+// Página de información y reserva de alojamiento
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getAccommodationById } from '../data/accommodations';
 import BookingForm, { type BookingData } from '../components/BookingForm';
+import Navbar from '../components/Navbar';
 import type { Accommodation } from '../data/accommodations';
-import '../styles/AccommodationDetail.css';
+import '../styles/Info.css';
 
-const AccommodationDetail: React.FC = () => {
+const Info: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [accommodation, setAccommodation] = useState<Accommodation | null>(null);
@@ -81,7 +82,9 @@ const AccommodationDetail: React.FC = () => {
   }
 
   return (
-    <div className="accommodation-detail">
+    <div className="info-page">
+      <Navbar />
+      <div className="accommodation-detail">
       {/* Header */}
       <div className="detail-header">
         <button className="btn-back" onClick={() => navigate(-1)}>
@@ -256,6 +259,7 @@ const AccommodationDetail: React.FC = () => {
           onCancel={() => setShowBookingForm(false)}
         />
       )}
+      </div>
     </div>
   );
 };
@@ -292,4 +296,4 @@ const getAmenityIcon = (amenity: string): string => {
   return iconMap[amenity] || '✅';
 };
 
-export default AccommodationDetail;
+export default Info;

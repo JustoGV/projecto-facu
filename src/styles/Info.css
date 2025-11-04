@@ -1,4 +1,9 @@
-/* Estilos para AccommodationDetail */
+/* Estilos para la página Info */
+
+.info-page {
+  background: #f8f9fa;
+  min-height: 100vh;
+}
 
 .accommodation-detail {
   max-width: 1200px;

@@ -26,11 +26,11 @@ const Home: React.FC = () => {
   };
 
   const handleAccommodationClick = (id: number) => {
-    navigate(`/accommodation/${id}`);
+    navigate(`/info/${id}`);
   };
 
   const handleBookNow = (id: number) => {
-    navigate(`/accommodation/${id}`);
+    navigate(`/info/${id}`);
   };
 
   return (
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
 
       <main className="home-main">
         {/* Hero Section */}
-        <Hero />
+        {/* <Hero /> */}
 
         {/* Container principal */}
         <div className="home-container">
@@ -64,7 +64,7 @@ const Home: React.FC = () => {
 
       <footer className="home-footer">
         <div className="footer-content">
-          <p>&copy; 2024 HomeSweetHome. Todos los derechos reservados.</p>
+          <p>&copy; 2025 HomeSweetHome. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>

@@ -24,8 +24,8 @@ export const mockAccommodations: Accommodation[] = [
     id: 1,
     title: "Apartamento moderno en el centro",
     description: "Hermoso apartamento completamente equipado en el corazón de la ciudad. Perfecto para viajeros de negocios o turistas que quieren estar cerca de todo.",
-    price: 85,
-    location: "Madrid, España",
+    price: 45000,
+    location: "Buenos Aires, Argentina",
     image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&h=300&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
@@ -46,8 +46,8 @@ export const mockAccommodations: Accommodation[] = [
     id: 2,
     title: "Casa rural con vistas al mar",
     description: "Encantadora casa rural ubicada en la costa con vistas espectaculares al mar. Ideal para desconectar y disfrutar de la naturaleza.",
-    price: 120,
-    location: "Valencia, España",
+    price: 65000,
+    location: "Mar del Plata, Argentina",
     image: "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=500&h=300&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=800&h=600&fit=crop",
@@ -66,10 +66,10 @@ export const mockAccommodations: Accommodation[] = [
   },
   {
     id: 3,
-    title: "Hotel boutique en Barcelona",
-    description: "Elegante hotel boutique en el Barrio Gótico de Barcelona. Combinación perfecta de historia y lujo moderno.",
-    price: 150,
-    location: "Barcelona, España",
+    title: "Hotel boutique en Córdoba",
+    description: "Elegante hotel boutique en el centro histórico de Córdoba. Combinación perfecta de historia y lujo moderno.",
+    price: 80000,
+    location: "Córdoba, Argentina",
     image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=500&h=300&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop",
@@ -90,8 +90,8 @@ export const mockAccommodations: Accommodation[] = [
     id: 4,
     title: "Cabaña en la montaña",
     description: "Acogedora cabaña de madera en plena montaña. Perfecta para una escapada romántica o vacaciones en familia rodeados de naturaleza.",
-    price: 95,
-    location: "Asturias, España",
+    price: 52000,
+    location: "Bariloche, Argentina",
     image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=500&h=300&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop",
@@ -110,10 +110,10 @@ export const mockAccommodations: Accommodation[] = [
   },
   {
     id: 5,
-    title: "Loft industrial en Bilbao",
-    description: "Moderno loft con diseño industrial en el centro de Bilbao. Espacio único y creativo cerca del Museo Guggenheim.",
-    price: 110,
-    location: "Bilbao, España",
+    title: "Loft industrial en Rosario",
+    description: "Moderno loft con diseño industrial en el centro de Rosario. Espacio único y creativo cerca del río Paraná.",
+    price: 58000,
+    location: "Rosario, Argentina",
     image: "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=500&h=300&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop",

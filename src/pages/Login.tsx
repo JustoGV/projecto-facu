@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import '../styles/Login.css';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Login: React.FC = () => {
       localStorage.setItem('usuarioName', formData.email.split('@')[0]);
       navigate('/');
     } else {
-      alert('Please fill in all fields');
+      alert('Por favor completa todos los campos');
     }
   };
 
@@ -35,35 +36,45 @@ const Login: React.FC = () => {
     <div className="login-page">
       <Navbar />
       <div className="login-container">
-        <div className="login-form">
+        <div className="login-card">
           <h2>Iniciar Sesión</h2>
-          <form onSubmit={handleSubmit}>
+          <p className="login-subtitle">Accede a tu cuenta de HomeSweetHome</p>
+          
+          <form onSubmit={handleSubmit} className="login-form">
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">📧 Email</label>
               <input
                 id="email"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
+                placeholder="ejemplo@correo.com"
                 required
               />
             </div>
+            
             <div className="form-group">
-              <label htmlFor="password">Contraseña</label>
+              <label htmlFor="password">🔒 Contraseña</label>
               <input
                 id="password"
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
+                placeholder="Tu contraseña"
                 required
               />
             </div>
+            
             <button type="submit" className="btn-login">
               Iniciar Sesión
             </button>
           </form>
+          
+          <div className="login-footer">
+            <p>¿No tienes cuenta? <a href="#" onClick={() => alert('Función no disponible')}>Regístrate aquí</a></p>
+          </div>
         </div>
       </div>
     </div>
