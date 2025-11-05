@@ -1,4 +1,4 @@
-// Página de inicio de sesión
+// Página de inicio de sesión simple
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,28 +7,17 @@ import '../styles/Login.css';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const [username, setUsername] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Simulación de login
-    if (formData.email && formData.password) {
-      localStorage.setItem('usuarioName', formData.email.split('@')[0]);
+    // Login simple - solo requiere nombre de usuario
+    if (username.trim()) {
+      localStorage.setItem('usuarioName', username.trim());
       navigate('/');
     } else {
-      alert('Por favor completa todos los campos');
+      alert('Por favor ingresa tu nombre');
     }
   };
 
@@ -37,43 +26,29 @@ const Login: React.FC = () => {
       <Navbar />
       <div className="login-container">
         <div className="login-card">
-          <h2>Iniciar Sesión</h2>
-          <p className="login-subtitle">Accede a tu cuenta de HomeSweetHome</p>
+          <h2>Bienvenido</h2>
+          <p className="login-subtitle">Ingresa tu nombre para continuar</p>
           
           <form onSubmit={handleSubmit} className="login-form">
             <div className="form-group">
-              <label htmlFor="email">📧 Email</label>
+              <label htmlFor="username">� Nombre</label>
               <input
-                id="email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="ejemplo@correo.com"
-                required
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="password">🔒 Contraseña</label>
-              <input
-                id="password"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="Tu contraseña"
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Tu nombre"
                 required
               />
             </div>
             
             <button type="submit" className="btn-login">
-              Iniciar Sesión
+              Ingresar
             </button>
           </form>
           
           <div className="login-footer">
-            <p>¿No tienes cuenta? <a href="#" onClick={() => alert('Función no disponible')}>Regístrate aquí</a></p>
+            <p>¡Es muy fácil! Solo ingresa tu nombre y comienza a explorar.</p>
           </div>
         </div>
       </div>

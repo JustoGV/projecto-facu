@@ -2,12 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   background-color: white;
   border-bottom: 1px solid #eee;
   position: sticky;
   top: 0;
   z-index: 100;
+  height: 60px;
 }
 
 /* Logo */
@@ -19,13 +20,14 @@
 }
 
 .logo h1 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: var(--primary, #222);
+  margin: 0;
 }
 
 .logoIcon {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   fill: var(--primary, #222);
 }
 
@@ -34,17 +36,18 @@
   display: flex;
   align-items: center;
   border: 1px solid #ccc;
-  border-radius: 30px;
-  padding: 0.4rem 1rem;
+  border-radius: 25px;
+  padding: 0.3rem 0.8rem;
   flex: 1;
-  max-width: 400px;
+  max-width: 350px;
   margin: 0 1.5rem;
   background: #f9f9f9;
+  height: 36px;
 }
 
 .searchIcon {
-  font-size: 1.1rem;
-  margin-right: 0.5rem;
+  font-size: 1rem;
+  margin-right: 0.4rem;
 }
 
 .searchInput {
@@ -52,7 +55,7 @@
   outline: none;
   flex: 1;
   background: transparent;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 /* Sesión */
@@ -66,30 +69,36 @@
   background-color: var(--primary, #333);
   color: white;
   border: none;
-  border-radius: 20px;
-  padding: 0.4rem 1rem;
+  border-radius: 18px;
+  padding: 0.3rem 0.8rem;
   cursor: pointer;
   font-weight: 500;
+  font-size: 0.9rem;
+  height: 32px;
 }
 
 .btnLogin {
   background-color: var(--primary, #007bff);
   color: white;
   border: none;
-  border-radius: 20px;
-  padding: 0.4rem 1rem;
+  border-radius: 18px;
+  padding: 0.3rem 0.8rem;
   cursor: pointer;
   font-weight: 500;
+  font-size: 0.9rem;
+  height: 32px;
 }
 
 .btnLogout {
   background-color: transparent;
   border: 1px solid #aaa;
-  border-radius: 20px;
-  padding: 0.4rem 1rem;
+  border-radius: 18px;
+  padding: 0.3rem 0.8rem;
   cursor: pointer;
   color: #444;
   font-weight: 500;
+  font-size: 0.9rem;
+  height: 32px;
 }
 
 .btnLogin:hover {
@@ -99,4 +108,64 @@
 .userBtn:hover,
 .btnLogout:hover {
   opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.4rem 1rem;
+    height: 56px;
+  }
+  
+  .logo h1 {
+    font-size: 1.1rem;
+  }
+  
+  .logoIcon {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .searchBar {
+    max-width: 200px;
+    margin: 0 1rem;
+    height: 32px;
+    padding: 0.2rem 0.6rem;
+  }
+  
+  .searchInput {
+    font-size: 0.85rem;
+  }
+  
+  .userSession {
+    gap: 0.5rem;
+  }
+  
+  .userBtn, .btnLogin, .btnLogout {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.85rem;
+    height: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.3rem 0.8rem;
+    height: 52px;
+  }
+  
+  .logo h1 {
+    font-size: 1rem;
+  }
+  
+  .searchBar {
+    max-width: 150px;
+    margin: 0 0.5rem;
+  }
+  
+  .userBtn, .btnLogin, .btnLogout {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    height: 26px;
+  }
 }

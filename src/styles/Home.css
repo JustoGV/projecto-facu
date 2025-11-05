@@ -42,10 +42,19 @@
   color: #666666;
 }
 
+/* Ajuste para navbar más pequeño */
+.home-main {
+  padding-top: 20px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .home-container {
     padding: 0 16px;
+  }
+  
+  .home-main {
+    padding-top: 16px;
   }
   
   .home-footer {

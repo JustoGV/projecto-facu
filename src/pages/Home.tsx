@@ -4,7 +4,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
 import SearchFiltersComponent, { type SearchFilters } from '../components/SearchFilters';
 import AccommodationList from '../components/AccommodationList';
 import { mockAccommodations } from '../data/accommodations';
