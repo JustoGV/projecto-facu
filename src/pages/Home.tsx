@@ -1,16 +1,46 @@
 
 // Página principal de la aplicación de reservas de alojamientos
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import SearchFiltersComponent, { type SearchFilters } from '../components/SearchFilters';
 import AccommodationList from '../components/AccommodationList';
-import { mockAccommodations } from '../data/accommodations';
+import { getAllAccommodations, handleApiError } from '../services/api';
 import '../styles/Home.css';
+
+// Interfaz para los datos que vienen del backend
+interface BackendAccommodation {
+  id: number;
+  title: string;
+  description: string;
+  pricePerNight: number;
+  maxGuests: number;
+  location: {
+    city: string;
+    country: string;
+    address: string;
+  };
+  amenities: Array<{
+    id: number;
+    name: string;
+  }>;
+  images: Array<{
+    id: number;
+    url: string;
+  }>;
+  reviews: Array<{
+    id: number;
+    rating: number;
+    comment: string;
+  }>;
+}
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const [accommodations, setAccommodations] = useState<BackendAccommodation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [filters, setFilters] = useState<SearchFilters>({
     location: '',
     checkIn: '',
@@ -19,6 +49,25 @@ const Home: React.FC = () => {
     priceRange: [0, 150000],
     type: 'all'
   });
+
+  // Cargar alojamientos del backend
+  useEffect(() => {
+    const loadAccommodations = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        const data = await getAllAccommodations();
+        setAccommodations(data);
+      } catch (err) {
+        setError(handleApiError(err));
+        console.error('Error loading accommodations:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAccommodations();
+  }, []);
 
   const handleFiltersChange = (newFilters: SearchFilters) => {
     setFilters(newFilters);
@@ -50,14 +99,39 @@ const Home: React.FC = () => {
             initialFilters={filters}
           />
 
+          {/* Estados de loading y error */}
+          {loading && (
+            <div className="loading-container">
+              <div className="loading-spinner"></div>
+              <p>Cargando alojamientos...</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="error-container">
+              <div className="error-message">
+                <h3>Error al cargar alojamientos</h3>
+                <p>{error}</p>
+                <button 
+                  className="retry-button"
+                  onClick={() => window.location.reload()}
+                >
+                  Reintentar
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Lista de alojamientos */}
-          <AccommodationList
-            accommodations={mockAccommodations}
-            filters={filters}
-            onAccommodationClick={handleAccommodationClick}
-            onBookNow={handleBookNow}
-            itemsPerPage={6}
-          />
+          {!loading && !error && (
+            <AccommodationList
+              accommodations={accommodations}
+              filters={filters}
+              onAccommodationClick={handleAccommodationClick}
+              onBookNow={handleBookNow}
+              itemsPerPage={6}
+            />
+          )}
         </div>
       </main>
 

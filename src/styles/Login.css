@@ -100,6 +100,21 @@
   background: #4c63d2;
 }
 
+.btn-login:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background: #fee;
+  color: #c33;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #fcc;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
 .login-footer {
   border-top: 1px solid #eee;
   padding-top: 20px;

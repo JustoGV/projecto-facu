@@ -2,29 +2,82 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getAccommodationById } from '../data/accommodations';
-import BookingForm, { type BookingData } from '../components/BookingForm';
+import { getAccommodationById as getAccommodationByIdAPI, handleApiError } from '../services/api';
+// import BookingForm, { type BookingData } from '../components/BookingForm';
 import Navbar from '../components/Navbar';
-import type { Accommodation } from '../data/accommodations';
 import '../styles/Info.css';
+
+// Interfaz para los datos que vienen del backend
+interface BackendAccommodation {
+  id: number;
+  title: string;
+  description: string;
+  pricePerNight: number;
+  maxGuests: number;
+  location: {
+    city: string;
+    country: string;
+    address: string;
+  };
+  host: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    fullName: string;
+    email: string;
+  };
+  amenities: Array<{
+    id: number;
+    name: string;
+  }>;
+  images: Array<{
+    id: number;
+    url: string;
+  }>;
+  reviews: Array<{
+    id: number;
+    rating: number;
+    comment: string;
+    user: {
+      firstName: string;
+      lastName: string;
+    };
+  }>;
+}
 
 const Info: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [accommodation, setAccommodation] = useState<Accommodation | null>(null);
+  const [accommodation, setAccommodation] = useState<BackendAccommodation | null>(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    if (id) {
-      const foundAccommodation = getAccommodationById(parseInt(id));
-      setAccommodation(foundAccommodation || null);
-    }
-    setLoading(false);
+    const loadAccommodation = async () => {
+      if (!id) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError('');
+        const data = await getAccommodationByIdAPI(parseInt(id));
+        setAccommodation(data);
+      } catch (err) {
+        setError(handleApiError(err));
+        console.error('Error loading accommodation:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAccommodation();
   }, [id]);
 
-  const handleBookingSubmit = (bookingData: BookingData) => {
+  /* const handleBookingSubmit = (bookingData: BookingData) => {
     // Aquí normalmente enviarías los datos a tu backend
     console.log('Booking submitted:', bookingData);
     
@@ -33,7 +86,7 @@ const Info: React.FC = () => {
     
     setShowBookingForm(false);
     navigate('/');
-  };
+  }; */
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-AR', {
@@ -58,10 +111,33 @@ const Info: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="accommodation-detail">
-        <div className="loading">
-          <div className="loading-spinner"></div>
-          <p>Cargando alojamiento...</p>
+      <div className="info-page">
+        <Navbar />
+        <div className="accommodation-detail">
+          <div className="loading">
+            <div className="loading-spinner"></div>
+            <p>Cargando alojamiento...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="info-page">
+        <Navbar />
+        <div className="accommodation-detail">
+          <div className="not-found">
+            <h2>Error al cargar alojamiento</h2>
+            <p>{error}</p>
+            <button className="btn-back" onClick={() => navigate('/')}>
+              Volver al inicio
+            </button>
+            <button className="btn-retry" onClick={() => window.location.reload()}>
+              Reintentar
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -69,13 +145,16 @@ const Info: React.FC = () => {
 
   if (!accommodation) {
     return (
-      <div className="accommodation-detail">
-        <div className="not-found">
-          <h2>Alojamiento no encontrado</h2>
-          <p>Lo sentimos, no pudimos encontrar el alojamiento que buscas.</p>
-          <button className="btn-back" onClick={() => navigate('/')}>
-            Volver al inicio
-          </button>
+      <div className="info-page">
+        <Navbar />
+        <div className="accommodation-detail">
+          <div className="not-found">
+            <h2>Alojamiento no encontrado</h2>
+            <p>Lo sentimos, no pudimos encontrar el alojamiento que buscas.</p>
+            <button className="btn-back" onClick={() => navigate('/')}>
+              Volver al inicio
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -92,16 +171,19 @@ const Info: React.FC = () => {
         </button>
         <div className="header-info">
           <h1>{accommodation.title}</h1>
-          <div className="header-meta">
-            <div className="location">
-              📍 {accommodation.location}
-            </div>
-            <div className="rating">
+                      <p className="accommodation-location">
+              📍 {accommodation.location.city}, {accommodation.location.country}
+            </p>
+            <div className="accommodation-rating">
               <span className="rating-star">⭐</span>
-              <span className="rating-value">{accommodation.rating}</span>
-              <span className="rating-reviews">({accommodation.reviews} reseñas)</span>
+              <span className="rating-value">
+                {accommodation.reviews && accommodation.reviews.length > 0 
+                  ? (accommodation.reviews.reduce((sum: number, review: any) => sum + review.rating, 0) / accommodation.reviews.length).toFixed(1)
+                  : 'Sin calificar'
+                }
+              </span>
+              <span className="rating-reviews">({accommodation.reviews ? accommodation.reviews.length : 0} reseñas)</span>
             </div>
-          </div>
         </div>
       </div>
 
@@ -109,7 +191,7 @@ const Info: React.FC = () => {
       <div className="image-gallery">
         <div className="main-image">
           <img 
-            src={accommodation.images[currentImageIndex]} 
+            src={accommodation.images[currentImageIndex] ? `/images/${accommodation.images[currentImageIndex].url}` : 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop'} 
             alt={`${accommodation.title} - Imagen ${currentImageIndex + 1}`}
           />
           <button 
@@ -138,7 +220,7 @@ const Info: React.FC = () => {
               className={`thumbnail ${index === currentImageIndex ? 'active' : ''}`}
               onClick={() => setCurrentImageIndex(index)}
             >
-              <img src={image} alt={`Vista ${index + 1}`} />
+              <img src={`/images/${image.url}`} alt={`Vista ${index + 1}`} />
             </button>
           ))}
         </div>
@@ -148,23 +230,14 @@ const Info: React.FC = () => {
         <div className="detail-main">
           {/* Información básica */}
           <div className="basic-info">
-            <div className="accommodation-type">
-              {accommodation.type === 'apartment' && '🏠 Apartamento'}
-              {accommodation.type === 'house' && '🏡 Casa'}
-              {accommodation.type === 'hotel' && '🏨 Hotel'}
-              {accommodation.type === 'cabin' && '🏘️ Cabaña'}
+                        <div className="property-type">
+              🏠 Alojamiento
             </div>
             
-            <div className="capacity-info">
-              <span className="capacity-item">
+            <div className="property-features">
+              <div className="feature">
                 👥 {accommodation.maxGuests} huéspedes
-              </span>
-              <span className="capacity-item">
-                🛏️ {accommodation.bedrooms} habitaciones
-              </span>
-              <span className="capacity-item">
-                🚿 {accommodation.bathrooms} baños
-              </span>
+              </div>
             </div>
           </div>
 
@@ -178,12 +251,12 @@ const Info: React.FC = () => {
           <div className="amenities-section">
             <h3>¿Qué ofrece este lugar?</h3>
             <div className="amenities-grid">
-              {accommodation.amenities.map((amenity, index) => (
-                <div key={index} className="amenity-item">
+              {accommodation.amenities.map((amenity) => (
+                <div key={amenity.id} className="amenity-item">
                   <span className="amenity-icon">
-                    {getAmenityIcon(amenity)}
+                    {getAmenityIcon(amenity.name)}
                   </span>
-                  <span className="amenity-name">{amenity}</span>
+                  <span className="amenity-name">{amenity.name}</span>
                 </div>
               ))}
             </div>
@@ -191,16 +264,19 @@ const Info: React.FC = () => {
 
           {/* Información del anfitrión */}
           <div className="host-section">
-            <h3>Anfitrión: {accommodation.host}</h3>
+            <h3>Anfitrión: {accommodation.host.fullName || `${accommodation.host.firstName} ${accommodation.host.lastName}`}</h3>
             <div className="host-info">
               <div className="host-avatar">
-                {accommodation.host.charAt(0)}
+                {accommodation.host.firstName ? accommodation.host.firstName.charAt(0) : 'H'}
               </div>
               <div className="host-details">
-                <p>Tu anfitrión {accommodation.host} estará disponible para ayudarte durante tu estancia.</p>
+                <p>Tu anfitrión {accommodation.host.fullName || `${accommodation.host.firstName} ${accommodation.host.lastName}`} estará disponible para ayudarte durante tu estancia.</p>
                 <div className="host-stats">
-                  <span>⭐ {accommodation.rating} calificación promedio</span>
-                  <span>💬 {accommodation.reviews} reseñas</span>
+                  <span>⭐ {accommodation.reviews && accommodation.reviews.length > 0 
+                    ? (accommodation.reviews.reduce((sum: number, review: any) => sum + review.rating, 0) / accommodation.reviews.length).toFixed(1)
+                    : 'Sin calificar'
+                  } calificación promedio</span>
+                  <span>💬 {accommodation.reviews ? accommodation.reviews.length : 0} reseñas</span>
                 </div>
               </div>
             </div>
@@ -210,24 +286,19 @@ const Info: React.FC = () => {
         {/* Panel de reserva */}
         <div className="booking-panel">
           <div className="price-info">
-            <span className="price">{formatPrice(accommodation.price)}</span>
+            <span className="price">{formatPrice(accommodation.pricePerNight)}</span>
             <span className="price-period">noche</span>
           </div>
           
           <div className="availability-status">
-            {accommodation.available ? (
-              <span className="available">✅ Disponible</span>
-            ) : (
-              <span className="unavailable">❌ No disponible</span>
-            )}
+            <span className="available">✅ Disponible</span>
           </div>
 
           <button 
             className="btn-reserve"
             onClick={() => setShowBookingForm(true)}
-            disabled={!accommodation.available}
           >
-            {accommodation.available ? 'Reservar ahora' : 'No disponible'}
+            Reservar ahora
           </button>
 
           <div className="booking-note">
@@ -251,14 +322,14 @@ const Info: React.FC = () => {
         </div>
       </div>
 
-      {/* Modal de reserva */}
-      {showBookingForm && (
+      {/* Modal de reserva temporalmente deshabilitado */}
+      {/* {showBookingForm && (
         <BookingForm
           accommodation={accommodation}
           onBookingSubmit={handleBookingSubmit}
           onCancel={() => setShowBookingForm(false)}
         />
-      )}
+      )} */}
       </div>
     </div>
   );

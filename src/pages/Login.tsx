@@ -1,23 +1,55 @@
-// Página de inicio de sesión simple
+// Página de inicio de sesión conectada al backend
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { loginUser, handleApiError } from '../services/api';
 import '../styles/Login.css';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Limpiar error al escribir
+    if (error) setError('');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Login simple - solo requiere nombre de usuario
-    if (username.trim()) {
-      localStorage.setItem('usuarioName', username.trim());
+    if (!formData.email || !formData.password) {
+      setError('Por favor completa todos los campos');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await loginUser(formData.email, formData.password);
+      
+      // Guardar información del usuario en localStorage
+      localStorage.setItem('usuarioName', response.firstName || formData.email.split('@')[0]);
+      localStorage.setItem('userToken', response.token || 'authenticated');
+      localStorage.setItem('userId', response.id || '1');
+      
+      // Navegar a home
       navigate('/');
-    } else {
-      alert('Por favor ingresa tu nombre');
+    } catch (err) {
+      setError(handleApiError(err));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -27,28 +59,44 @@ const Login: React.FC = () => {
       <div className="login-container">
         <div className="login-card">
           <h2>Bienvenido</h2>
-          <p className="login-subtitle">Ingresa tu nombre para continuar</p>
+          <p className="login-subtitle">Ingresa tus credenciales para continuar</p>
+          
+          {error && <div className="error-message">{error}</div>}
           
           <form onSubmit={handleSubmit} className="login-form">
             <div className="form-group">
-              <label htmlFor="username">� Nombre</label>
+              <label htmlFor="email">📧 Email</label>
               <input
-                id="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Tu nombre"
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="tu@email.com"
                 required
               />
             </div>
             
-            <button type="submit" className="btn-login">
-              Ingresar
+            <div className="form-group">
+              <label htmlFor="password">🔒 Contraseña</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                placeholder="Tu contraseña"
+                required
+              />
+            </div>
+            
+            <button type="submit" className="btn-login" disabled={loading}>
+              {loading ? 'Ingresando...' : 'Ingresar'}
             </button>
           </form>
           
           <div className="login-footer">
-            <p>¡Es muy fácil! Solo ingresa tu nombre y comienza a explorar.</p>
+            <p>¡Es muy fácil! Ingresa tus credenciales y comienza a explorar.</p>
           </div>
         </div>
       </div>

@@ -2,12 +2,38 @@
 
 import React, { useState, useEffect } from 'react';
 import AccommodationCard from './AccommodationCard';
-import type { Accommodation } from '../data/accommodations';
 import type { SearchFilters } from './SearchFilters';
 import '../styles/AccommodationList.css';
 
+// Interfaz para los datos que vienen del backend
+interface BackendAccommodation {
+  id: number;
+  title: string;
+  description: string;
+  pricePerNight: number;
+  maxGuests: number;
+  location: {
+    city: string;
+    country: string;
+    address: string;
+  };
+  amenities: Array<{
+    id: number;
+    name: string;
+  }>;
+  images: Array<{
+    id: number;
+    url: string;
+  }>;
+  reviews: Array<{
+    id: number;
+    rating: number;
+    comment: string;
+  }>;
+}
+
 interface AccommodationListProps {
-  accommodations: Accommodation[];
+  accommodations: BackendAccommodation[];
   filters?: SearchFilters;
   onAccommodationClick?: (id: number) => void;
   onBookNow?: (id: number) => void;
@@ -22,7 +48,7 @@ const AccommodationList: React.FC<AccommodationListProps> = ({
   itemsPerPage = 6
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredAccommodations, setFilteredAccommodations] = useState<Accommodation[]>(accommodations);
+  const [filteredAccommodations, setFilteredAccommodations] = useState<BackendAccommodation[]>(accommodations);
 
   // Filtrar alojamientos basado en los filtros
   useEffect(() => {
@@ -32,8 +58,9 @@ const AccommodationList: React.FC<AccommodationListProps> = ({
       // Filtrar por ubicación
       if (filters.location) {
         filtered = filtered.filter(acc =>
-          acc.location.toLowerCase().includes(filters.location.toLowerCase()) ||
-          acc.title.toLowerCase().includes(filters.location.toLowerCase())
+          `${acc.location.city}, ${acc.location.country}`.toLowerCase().includes(filters.location.toLowerCase()) ||
+          acc.title.toLowerCase().includes(filters.location.toLowerCase()) ||
+          acc.location.address.toLowerCase().includes(filters.location.toLowerCase())
         );
       }
 
@@ -42,22 +69,22 @@ const AccommodationList: React.FC<AccommodationListProps> = ({
         filtered = filtered.filter(acc => acc.maxGuests >= filters.guests);
       }
 
-      // Filtrar por tipo
-      if (filters.type && filters.type !== 'all') {
-        filtered = filtered.filter(acc => acc.type === filters.type);
-      }
+      // Filtrar por tipo (comentado ya que el backend no tiene este campo por ahora)
+      // if (filters.type && filters.type !== 'all') {
+      //   filtered = filtered.filter(acc => acc.type === filters.type);
+      // }
 
       // Filtrar por rango de precio
       if (filters.priceRange) {
         filtered = filtered.filter(acc =>
-          acc.price >= filters.priceRange[0] && acc.price <= filters.priceRange[1]
+          acc.pricePerNight >= filters.priceRange[0] && acc.pricePerNight <= filters.priceRange[1]
         );
       }
 
-      // Filtrar por disponibilidad (si hay fechas seleccionadas)
-      if (filters.checkIn && filters.checkOut) {
-        filtered = filtered.filter(acc => acc.available);
-      }
+      // Filtrar por disponibilidad (comentado ya que el backend no tiene este campo por ahora)
+      // if (filters.checkIn && filters.checkOut) {
+      //   filtered = filtered.filter(acc => acc.available);
+      // }
     }
 
     setFilteredAccommodations(filtered);
