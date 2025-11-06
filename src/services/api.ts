@@ -1,6 +1,6 @@
 // Servicio de API para conectar con el backend
 
-const API_BASE_URL = 'http://localhost:8081/api';
+const API_BASE_URL = 'http://localhost:8080/api';
 
 // Configuración base para fetch
 const apiConfig = {

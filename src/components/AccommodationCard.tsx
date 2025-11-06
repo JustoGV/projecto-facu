@@ -41,6 +41,22 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({
   onBookNow, 
   onViewDetails 
 }) => {
+  // Imágenes hardcodeadas
+  const hardcodedImages = [
+    'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1567496898669-ee935f5317ac?w=500&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=500&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=500&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1493663284031-b7e3aaa4c4bb?w=500&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1520637736862-4d197d17c55a?w=500&h=300&fit=crop',
+    'https://images.unsplash.com/photo-1498889444388-e67ea62c464b?w=500&h=300&fit=crop',
+  ];
+
+  const getImageForAccommodation = (id: number) => {
+    return hardcodedImages[id % hardcodedImages.length];
+  };
+
   const handleBookNow = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onBookNow) {
@@ -65,10 +81,7 @@ const AccommodationCard: React.FC<AccommodationCardProps> = ({
     <div className="accommodation-card" onClick={handleCardClick}>
       <div className="card-image">
         <img 
-          src={accommodation.images && accommodation.images.length > 0 
-            ? `/images/${accommodation.images[0].url}` 
-            : 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&h=300&fit=crop'
-          } 
+          src={getImageForAccommodation(accommodation.id)} 
           alt={accommodation.title} 
         />
         <div className="card-badge">

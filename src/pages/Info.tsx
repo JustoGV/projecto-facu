@@ -54,6 +54,32 @@ const Info: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // Imágenes hardcodeadas para la galería
+  const getHardcodedImages = (accommodationId: number) => {
+    const imagesSets = [
+      [
+        'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop',
+      ],
+      [
+        'https://images.unsplash.com/photo-1567496898669-ee935f5317ac?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop',
+      ],
+      [
+        'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1574643156929-51fa098b0394?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop',
+        'https://images.unsplash.com/photo-1494203484021-3c454daf4c7f?w=800&h=600&fit=crop',
+      ],
+    ];
+    
+    return imagesSets[accommodationId % imagesSets.length];
+  };
+
   useEffect(() => {
     const loadAccommodation = async () => {
       if (!id) {
@@ -98,13 +124,15 @@ const Info: React.FC = () => {
   const handleImageNavigation = (direction: 'prev' | 'next') => {
     if (!accommodation) return;
     
+    const hardcodedImages = getHardcodedImages(accommodation.id);
+    
     if (direction === 'prev') {
       setCurrentImageIndex(prev => 
-        prev === 0 ? accommodation.images.length - 1 : prev - 1
+        prev === 0 ? hardcodedImages.length - 1 : prev - 1
       );
     } else {
       setCurrentImageIndex(prev => 
-        prev === accommodation.images.length - 1 ? 0 : prev + 1
+        prev === hardcodedImages.length - 1 ? 0 : prev + 1
       );
     }
   };
@@ -191,20 +219,20 @@ const Info: React.FC = () => {
       <div className="image-gallery">
         <div className="main-image">
           <img 
-            src={accommodation.images[currentImageIndex] ? `/images/${accommodation.images[currentImageIndex].url}` : 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop'} 
+            src={getHardcodedImages(accommodation.id)[currentImageIndex]} 
             alt={`${accommodation.title} - Imagen ${currentImageIndex + 1}`}
           />
           <button 
             className="nav-btn prev-btn" 
             onClick={() => handleImageNavigation('prev')}
-            disabled={accommodation.images.length <= 1}
+            disabled={getHardcodedImages(accommodation.id).length <= 1}
           >
             ‹
           </button>
           <button 
             className="nav-btn next-btn" 
             onClick={() => handleImageNavigation('next')}
-            disabled={accommodation.images.length <= 1}
+            disabled={getHardcodedImages(accommodation.id).length <= 1}
           >
             ›
           </button>
@@ -213,14 +241,14 @@ const Info: React.FC = () => {
           </div>
         </div>
         
-        <div className="image-thumbnails">
-          {accommodation.images.map((image, index) => (
+        <div className="thumbnails">
+          {getHardcodedImages(accommodation.id).map((imageUrl, index) => (
             <button
               key={index}
               className={`thumbnail ${index === currentImageIndex ? 'active' : ''}`}
               onClick={() => setCurrentImageIndex(index)}
             >
-              <img src={`/images/${image.url}`} alt={`Vista ${index + 1}`} />
+              <img src={imageUrl} alt={`Vista ${index + 1}`} />
             </button>
           ))}
         </div>
