@@ -1,10 +1,10 @@
 .navbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 2rem;
+  align-items: center;
+  padding: 1rem 2rem;
   background-color: white;
-  border-bottom: 1px solid #eee;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -26,23 +26,15 @@
 }
 
 .logoIcon {
-  width: 24px;
-  height: 24px;
+  width: 2rem;
+  height: 2rem;
   fill: var(--primary, #222);
 }
 
 /* Search */
 .searchBar {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  padding: 0.3rem 0.8rem;
-  flex: 1;
-  max-width: 350px;
-  margin: 0 1.5rem;
-  background: #f9f9f9;
-  height: 36px;
+  flex: 0 1 400px;
+  position: relative;
 }
 
 .searchIcon {
@@ -51,7 +43,10 @@
 }
 
 .searchInput {
-  border: none;
+  width: 100%;
+  padding: 0.5rem 2rem;
+  border: 1px solid #ddd;
+  border-radius: 20px;
   outline: none;
   flex: 1;
   background: transparent;
@@ -61,53 +56,33 @@
 /* Sesión */
 .userSession {
   display: flex;
+  gap: 1rem;
   align-items: center;
-  gap: 0.8rem;
 }
 
-.userBtn {
-  background-color: var(--primary, #333);
-  color: white;
-  border: none;
-  border-radius: 18px;
-  padding: 0.3rem 0.8rem;
+.userBtn, .btnLogin, .btnLogout, .btnRegister {
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
-  height: 32px;
+  transition: all 0.3s ease;
 }
 
 .btnLogin {
-  background-color: var(--primary, #007bff);
+  background-color: var(--primary);
   color: white;
   border: none;
-  border-radius: 18px;
-  padding: 0.3rem 0.8rem;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
-  height: 32px;
 }
 
 .btnLogout {
-  background-color: transparent;
-  border: 1px solid #aaa;
-  border-radius: 18px;
-  padding: 0.3rem 0.8rem;
-  cursor: pointer;
-  color: #444;
-  font-weight: 500;
-  font-size: 0.9rem;
-  height: 32px;
+  background-color: var(--danger);
+  color: white;
+  border: none;
 }
 
-.btnLogin:hover {
-  background-color: #0056b3;
-}
-
-.userBtn:hover,
-.btnLogout:hover {
-  opacity: 0.8;
+.btnRegister {
+  background-color: white;
+  color: var(--primary);
+  border: 2px solid var(--primary);
 }
 
 /* Responsive */

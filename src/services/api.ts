@@ -48,8 +48,14 @@ export const getAccommodationById = async (id: number) => {
   }
 };
 
+interface LoginResponse {
+  firstName?: string;
+  token?: string;
+  id?: string;
+}
+
 // Login de usuario
-export const loginUser = async (email: string, password: string) => {
+export const loginUser = async (email: string, password: string): Promise<LoginResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
@@ -72,10 +78,9 @@ export const loginUser = async (email: string, password: string) => {
   }
 };
 
-// Utilidad para manejar errores de API
 export const handleApiError = (error: any): string => {
-  if (error.message) {
-    return error.message;
+  if (error?.response?.data?.message) {
+    return error.response.data.message;
   }
-  return 'Ha ocurrido un error inesperado. Por favor, intenta nuevamente.';
+  return 'Error al conectar con el servidor';
 };

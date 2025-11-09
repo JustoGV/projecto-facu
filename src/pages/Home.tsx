@@ -1,4 +1,3 @@
-
 // Página principal de la aplicación de reservas de alojamientos
 
 import React, { useState, useEffect } from 'react';
@@ -77,7 +76,13 @@ const Home: React.FC = () => {
     navigate(`/info/${id}`);
   };
 
+
   const handleBookNow = (id: number) => {
+    const isAuthenticated = localStorage.getItem("usuarioName");
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
     navigate(`/info/${id}`);
   };
 

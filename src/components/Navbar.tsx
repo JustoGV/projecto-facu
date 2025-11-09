@@ -24,14 +24,22 @@ const Navbar: React.FC = () => {
     navigate("/login");
   };
 
-  const handleUserClick = () => {
-    navigate("/anfitrion");
+  const handleUserProfile = () => {
+    navigate("/perfil");
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
+  const handleRegister = () => {
+    navigate("/register");
   };
 
   return (
     <nav className="navbar">
-      {/* Logo */}
-      <div className="logo">
+      {/* Logo clickeable */}
+      <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
         <svg
           className="logoIcon"
           xmlns="http://www.w3.org/2000/svg"
@@ -53,21 +61,26 @@ const Navbar: React.FC = () => {
         />
       </div>
 
-      {/* Sesión de usuario */}
+      {/* Sesión de usuario actualizada */}
       <div className="userSession">
         {username ? (
           <>
-            <button className="userBtn" onClick={handleUserClick}>
-              {username}
+            <button className="userBtn" onClick={handleUserProfile}>
+              Mi perfil
             </button>
             <button className="btnLogout" onClick={handleLogout}>
               Cerrar sesión
             </button>
           </>
         ) : (
-          <button className="btnLogin" onClick={handleLogin}>
-            Iniciar sesión
-          </button>
+          <>
+            <button className="btnLogin" onClick={handleLogin}>
+              Iniciar sesión
+            </button>
+            <button className="btnRegister" onClick={handleRegister}>
+              Registrarse
+            </button>
+          </>
         )}
       </div>
     </nav>

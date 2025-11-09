@@ -7,9 +7,10 @@
 
 .login-container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 60px); /* Resta la altura del navbar */
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
   padding: 20px;
 }
 
@@ -38,6 +39,12 @@
 }
 
 .login-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -49,10 +56,13 @@
   flex-direction: column;
   gap: 8px;
   text-align: left;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
-  color: #555;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #666;
   font-size: 0.9rem;
   font-weight: 600;
   display: flex;
@@ -61,9 +71,10 @@
 }
 
 .form-group input {
-  padding: 12px 16px;
+  width: 100%;
+  padding: 0.75rem;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.2s ease;
   background: white;
@@ -80,20 +91,19 @@
 }
 
 .btn-login {
-  background: #667eea;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary);
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: 500;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s;
   margin-top: 4px;
 }
 
 .btn-login:hover {
-  background: #5a6fd8;
+  background-color: var(--primary-dark);
 }
 
 .btn-login:active {
@@ -113,6 +123,9 @@
   border: 1px solid #fcc;
   margin-bottom: 16px;
   font-size: 0.9rem;
+  color: var(--danger);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }
 
 .login-footer {
@@ -125,6 +138,49 @@
   font-size: 0.85rem;
   margin: 0;
   font-style: italic;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1rem;
+  color: #666;
+}
+
+.register-link span {
+  color: var(--primary);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.register-link span:hover {
+  color: var(--primary-dark);
+}
+
+.login-logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 10px;
+  transition: transform 0.2s ease;
+}
+
+.login-logo:hover {
+  transform: scale(1.05);
+}
+
+.login-logo .logoIcon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.login-logo h1 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 /* Responsive */
