@@ -12,7 +12,7 @@ const apiConfig = {
 // Obtener todos los alojamientos
 export const getAllAccommodations = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/accomodations`, {
+    const response = await fetch(`${API_BASE_URL}/accommodations`, {
       method: 'GET',
       ...apiConfig,
     });
@@ -31,7 +31,7 @@ export const getAllAccommodations = async () => {
 // Obtener alojamiento por ID
 export const getAccommodationById = async (id: number) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/accomodations/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/accommodations/${id}`, {
       method: 'GET',
       ...apiConfig,
     });
@@ -83,4 +83,31 @@ export const handleApiError = (error: any): string => {
     return error.response.data.message;
   }
   return 'Error al conectar con el servidor';
+};
+
+interface RegisterData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}
+
+export const registerUser = async (userData: RegisterData) => {
+  try {
+    const response = await fetch('YOUR_API_ENDPOINT/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en el registro');
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw handleApiError(error);
+  }
 };
